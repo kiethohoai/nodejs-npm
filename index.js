@@ -25,12 +25,12 @@ const tempProduct = fs.readFileSync(`${__dirname}/templates/template-product.htm
 
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
 const dataObj = JSON.parse(data);
-
 const server = http.createServer((req, res) => {
-  const pathName = req.url;
+  const query = url.parse(req.url, true).query;
+  const pathname = url.parse(req.url).pathname;
 
   // todo Overview page
-  if (pathName === '/' || pathName === '/overview') {
+  if (pathname === '/' || pathname === '/overview') {
     res.writeHead(200, { 'Content-type': 'text/html' });
 
     const cartHtml = dataObj.map((el) => replaceTemplate(tempCart, el)).join();
@@ -38,10 +38,14 @@ const server = http.createServer((req, res) => {
     res.end(output);
 
     // todo Product page
-  } else if (pathName === '/product') {
-    res.end('This is PRODUCT');
+  } else if (pathname === '/product') {
+    res.writeHead(200, { 'Content-type': 'text/html' });
+    const product = dataObj[query.id];
+    const output = replaceTemplate(tempProduct, product);
+    res.end(output);
+
     // todo API
-  } else if (pathName === '/api') {
+  } else if (pathname === '/api') {
     res.writeHead(200, { 'Content-type': 'application/json' });
     res.end(data);
     // todo Not found page
@@ -56,31 +60,4 @@ const server = http.createServer((req, res) => {
   res.end('Hello from the server!');
 });
 
-server.listen(8000, '127.0.0.1', () => {
-  console.log('Listening to request on port 8000');
-});
-
-// TODO FILE
-// BLOCKING SYNCHRONOUS WAY
-// const textIn = fs.readFileSync('./txt/input.txt', 'utf-8');
-// console.log('CHECK  textIn =', textIn);
-// const textOut = `This is what we know about the avocado: ${textIn}.\nCreate on ${Date.now()}`;
-// fs.writeFileSync('./txt/output.txt', textOut);
-// console.log('File written!');
-
-// NON-BLOCKING ASYNC WAY
-// fs.readFile('./txt/startTTT.txt', 'utf-8', (error, data1) => {
-//   if (error) return console.log('ERROR!');
-//   console.log('🚀CHECK  data1 =', data1);
-//   fs.readFile(`./txt/${data1}.txt`, 'utf-8', (error, data2) => {
-//     console.log('🚀CHECK  data2 =', data2);
-//     fs.readFile(`./txt/append.txt`, 'utf-8', (error, data3) => {
-//       console.log('🚀CHECK  data3 =', data3);
-
-//       fs.writeFile('./txt/final.txt', `${data2}\n${data3}`, 'utf-8', (err) => {
-//         console.log('Your file has been written!');
-//       });
-//     });
-//   });
-// });
-// console.log('Will read file!');
+server.listen(8000, '127.0.0.1', () => {});
