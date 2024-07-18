@@ -3,6 +3,9 @@ const http = require('http');
 const url = require('url');
 
 // TODO SERVER
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
+const dataObj = JSON.parse(data);
+
 const server = http.createServer((req, res) => {
   const pathName = req.url;
 
@@ -10,6 +13,9 @@ const server = http.createServer((req, res) => {
     res.end('This is OVERVIEW');
   } else if (pathName === '/product') {
     res.end('This is PRODUCT');
+  } else if (pathName === '/api') {
+    res.writeHead(200, { 'Content-type': 'application/json' });
+    res.end(data);
   } else {
     res.writeHead(404, {
       'Content-type': 'text/html',
@@ -17,7 +23,7 @@ const server = http.createServer((req, res) => {
     });
     res.end('<h1>Page not found!</h1>');
   }
-  //
+
   res.end('Hello from the server!');
 });
 
