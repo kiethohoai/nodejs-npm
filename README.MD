@@ -13,3 +13,5 @@
 013 Parsing Variables from URLs
 014 Using Modules 2 Our Own Modules
 015 Introduction to NPM and the package.json File
+016 Types of Packages and Installs
+017 Using Modules 3 3rd Party Modules
