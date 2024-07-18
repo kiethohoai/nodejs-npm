@@ -4,3 +4,5 @@
 004 Using Modules 1 Core Modules
 005 Reading and Writing Files
 006 Blocking and Non-Blocking Asynchronous Nature of Node.js
+007 Reading and Writing Files Asynchronously
+008 Creating a Simple Web Server
