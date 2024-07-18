@@ -24,3 +24,4 @@
 002 An Overview of How the Web Works
 003 HTTP in Action
 004 Front-End vs. Back-End Web Development
+005 Static vs Dynamic vs API
